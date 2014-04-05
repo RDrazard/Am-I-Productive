@@ -24,9 +24,9 @@ mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
 #                      os.environ['OPENSHIFT_MONGODB_DB_PASSWORD'],
 #                      'amiproductive')
 
-# def user_find(email):
-#   if not email: return None
-#   return mongo_db.users.find_one({ '_id': email})
+def user_find(data):
+  if not data: return None
+  return mongo_db.users.find_one({ '_id': data})
 
 # @bottle.route('/', method="POST")
 # def index():
@@ -57,8 +57,8 @@ def data():
 @bottle.route('/receiveData', method="POST")
 def receiveData():
   post = bottle.request.forms
-  good = ['facebook.com']
-  bad = []
+  good = []
+  bad = ['https://facebook.com']
 
   if post.get('data'):
     info = user_find(post.get('data'))
