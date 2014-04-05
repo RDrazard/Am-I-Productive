@@ -103,9 +103,9 @@ def receiveData():
       )
     else:
       connection = {
-        '_id' : '10:10:10:10',
+        '_id' : url,
         'count' : 1,
-        'url' : url
+        'mac' : '10:10:10:10'
       }
       new_url = mongo_db.traffic.insert(connection)
 
