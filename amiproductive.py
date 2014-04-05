@@ -47,13 +47,7 @@ mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
 
 @bottle.route('/')
 def index():
-  return bottle.template('index', mac=getmac('eth0'))
-
-import commands
-def getmac(iface):
-    mac = commands.getoutput("ifconfig " + iface + "| grep HWaddr | awk '{ print $5 }'")
-    if len(mac)==17:
-        return mac
+  return bottle.template('index', mac=(':'.join(['{:02x}'.format((uuid.getnode() >> i) & 0xff) for i in range(0,8*6,8)][::-1])))
 
 # def snippet_create(user, code):
 #   nsnippet = {
