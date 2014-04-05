@@ -1,10 +1,9 @@
 from setuptools import setup
 
-setup(name='YourAppName',
+setup(name='Am I Productive?',
       version='1.0',
-      description='OpenShift App',
-      author='Your Name',
-      author_email='example@example.com',
-      url='http://www.python.org/sigs/distutils-sig/',
-#      install_requires=['Django>=1.3'],
+      description='A real-time report of your productivity based on your traffic.',
+      author='Am I Productive?',
+      author_email='alan.plotko@gmail.com',
+      install_requires=['pymongo', 'WebOb']
      )
