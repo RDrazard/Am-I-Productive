@@ -51,8 +51,9 @@ def url_find(data):
 #   else:
 #     return bottle.template('index', result=None)
 
-@bottle.route('/', method="GET")
+@bottle.route('/')
 def index():
+  mongo_db.collection.aggregate({$group:{_id: "", connections: {$sum: "$count"}}}, {$project:{_id:0,connections: "$count"}});
   return bottle.template('index', mac=None)
 
 @bottle.route('/data', method="POST")
@@ -62,8 +63,8 @@ def data():
 @bottle.route('/receiveData', method="POST")
 def receiveData():
   post = bottle.request.forms
-  good = []
-  bad = ['https://facebook.com']
+  good = ['google.com', 'stackoverflow.com']
+  bad = ['facebook.com', 'reddit.com']
 
   if post.get('data'):
     info = user_find('10:10:10:10')
