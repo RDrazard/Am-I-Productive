@@ -231,10 +231,9 @@
                             <div class="small-box bg-aqua">
                                 <div class="inner">
                                     <h3>
+                                    % setdefault('total_requests', 0)
                                     % if defined('total_requests'):
                                         {{ total_requests }}
-                                    % else
-                                        0
                                     % end
                                     </h3>
                                     <p>
