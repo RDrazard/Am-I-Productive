@@ -57,7 +57,7 @@ def data():
 @bottle.route('/receiveData', method="POST")
 def receiveData():
   post = bottle.request.forms
-  good = []
+  good = ['facebook.com']
   bad = []
 
   if post.get('data'):
