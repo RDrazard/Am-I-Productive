@@ -63,8 +63,8 @@ def data():
 @bottle.route('/receiveData', method="POST")
 def receiveData():
   post = bottle.request.forms
-  # good = ['google.com', 'stackoverflow.com']
-  # bad = ['facebook.com', 'reddit.com']
+  good = ['google.com', 'stackoverflow.com']
+  bad = ['facebook.com', 'reddit.com']
 
   if post.get('data'):
     info = user_find('10:10:10:10')
