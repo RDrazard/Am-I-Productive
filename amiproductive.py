@@ -69,24 +69,24 @@ def receiveData():
     info = user_find('10:10:10:10')
     url = urlparse(re.search("(?P<url>https?://[^\s]+)", post.get('data')).group("url"))[1]
     
-    if info:
-      if url in good:
-        mongo_db.users.update(
-          { '_id' : '10:10:10:10' },
-          { '$inc' : { 'good' : 1, 'bad' : -1 } }
-        )
-      elif url in bad:
-        mongo_db.users.update(
-          { '_id' : '10:10:10:10' },
-          { '$inc' : { 'good' : -1, 'bad' : 1 } }
-        )
-    else:
+    if not info:   
       user = {
         '_id' : '10:10:10:10',
         'good' : 0,
         'bad' : 0
       }
       userid = mongo_db.users.insert(user)
+
+    if url in good:
+      mongo_db.users.update(
+        { '_id' : '10:10:10:10' },
+        { '$inc' : { 'good' : 1, 'bad' : -1 } }
+      )
+    elif url in bad:
+      mongo_db.users.update(
+        { '_id' : '10:10:10:10' },
+        { '$inc' : { 'good' : -1, 'bad' : 1 } }
+      )
 
     traffic = url_find(url)
     if traffic:
