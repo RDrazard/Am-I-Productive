@@ -28,6 +28,10 @@ def user_find(data):
   if not data: return None
   return mongo_db.users.find_one({ '_id': data})
 
+def url_find(data):
+  if not data: return None
+  return mongo_db.traffic.find_one({ 'url': data})
+
 # @bottle.route('/', method="POST")
 # def index():
 #   data = bottle.request.forms
@@ -75,11 +79,13 @@ def receiveData():
           { '_id' : '10:10:10:10' },
           { '$inc' : { 'good' : -1, 'bad' : 1 } }
         )
+
+    traffic = url_find(url)
+    if traffic:
       mongo_db.traffic.update(
         { 'url' : url },
         { '$inc' : { 'count' : 1 } }
       )
-
     else:
       connection = {
         '_id': '10:10:10:10',
