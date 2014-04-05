@@ -67,17 +67,17 @@ def receiveData():
     if info:
       if url in good:
         mongo_db.users.update(
-          { _id : "10:10:10:10" },
-          { "$inc" : { good : 1, bad: -1 } }
+          { '_id' : '10:10:10:10' },
+          { '$inc' : { 'good' : 1, 'bad' : -1 } }
         )
       elif url in bad:
         mongo_db.users.update(
-          { _id : "10:10:10:10" },
-          { "$inc" : { good: -1, bad : 1 } }
+          { '_id' : '10:10:10:10' },
+          { '$inc' : { 'good' : -1, 'bad' : 1 } }
         )
       mongo_db.traffic.update(
-        { url : url },
-        { "$inc" : { count: 1 } }
+        { 'url' : url },
+        { '$inc' : { 'count' : 1 } }
       )
 
     else:
