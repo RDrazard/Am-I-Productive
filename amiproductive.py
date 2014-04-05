@@ -51,8 +51,7 @@ def index():
 
 @bottle.route('/receiveData', method="POST")
 def receiveData():
-  with open(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'static/userdata/data.txt'), "a") as f:
-    f.write(bottle.request.POST)
+  return template('test', string=bottle.request.POST)
 
 # def snippet_create(user, code):
 #   nsnippet = {
