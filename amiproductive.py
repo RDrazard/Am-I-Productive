@@ -53,8 +53,13 @@ def url_find(data):
 
 @bottle.route('/')
 def index():
-  # mongo_db.collection.aggregate({$group:{_id: "", connections: {$sum: "$count"}}}, {$project:{_id:0,connections: "$count"}});
-  return bottle.template('index', mac=None)
+  total_requests = mongo_db.traffic.aggregate([{ 
+    $group: { 
+        _id: null, 
+        total: { $sum: "$count" } 
+    } 
+  }])
+  return bottle.template('index', mac=None, total_requests=total_requests)
 
 @bottle.route('/data', method="POST")
 def data():

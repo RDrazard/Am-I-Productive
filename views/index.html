@@ -122,7 +122,7 @@
                             <a href="index">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
-                        </li><!-- 
+                        </li><!--
                         <li>
                             <a href="pages/widgets">
                                 <i class="fa fa-th"></i> <span>Widgets</span> <small class="badge pull-right bg-green">new</small>
@@ -231,10 +231,14 @@
                             <div class="small-box bg-aqua">
                                 <div class="inner">
                                     <h3>
-                                        150
+                                    % if defined('total_requests'):
+                                        {{ total_requests }}
+                                    % else
+                                        0
+                                    % end
                                     </h3>
                                     <p>
-                                        Connections
+                                        Total Requests Made
                                     </p>
                                 </div>
                                 <div class="icon">
