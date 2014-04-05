@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import uuid
 import bottle
 import pymongo
@@ -51,8 +52,32 @@ def index():
 
 @bottle.route('/receiveData', method="POST")
 def receiveData():
-  with open(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'static/data.txt'), "a") as f:
-    f.write(bottle.request.forms.get('data'))
+  post = bottle.request.forms
+  good = []
+  bad = []
+
+  if post.get('data'):
+    info = user_find(post.get('data'))
+    url = re.search("(?P<url>https?://[^\s]+)", info).group("url")
+    
+    if info:
+      if url in good:
+        mongo_db.users.update(
+          { _id : "10:10:10:10" },
+          { $inc : { good : 1, bad: -1 } }
+        )
+      elif url in bad:
+        mongo_db.users.update(
+          { _id : "10:10:10:10" },
+          { $inc : { good: -1, bad : 1 } }
+        )
+
+    else:
+      connection = {
+        '_id': '10:10:10:10',
+        'url': url
+      }
+      userid = mongo_db.traffic.insert(connection)
 
 # def snippet_create(user, code):
 #   nsnippet = {
