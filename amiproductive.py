@@ -31,7 +31,7 @@ mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
 # def index():
 #   data = bottle.request.forms
 #   if data.get('email'):
-#     # check for pre existance
+#     # check for pre existence
 #     tuser = user_find(data.get('email'))
 #     if tuser:
 #       return bottle.template('index', result='You are already registered!')
@@ -45,9 +45,15 @@ mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
 #   else:
 #     return bottle.template('index', result=None)
 
-@bottle.route('/')
+@bottle.route('/', method="GET")
 def index():
-  return bottle.template('index', mac=None)
+  mongo_db
+  return bottle.template('index')
+
+@bottle.route('/receiveData', method="POST")
+def receiveData():
+  with open("/static/userdata/data.txt", "a") as f:
+    f.write(bottle.request.POST)
 
 # def snippet_create(user, code):
 #   nsnippet = {
