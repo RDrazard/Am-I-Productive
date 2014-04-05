@@ -6,6 +6,7 @@ import re
 import uuid
 import bottle
 import pymongo
+from urllib.parse import urlparse
 
 bottle.debug(True)
 
@@ -66,7 +67,7 @@ def receiveData():
 
   if post.get('data'):
     info = user_find('10:10:10:10')
-    url = re.search("(?P<url>https?://[^\s]+)", post.get('data')).group("url")
+    url = urlparse(re.search("(?P<url>https?://[^\s]+)", url).group("url"))[1]
     
     if info:
       if url in good:
