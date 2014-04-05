@@ -97,7 +97,7 @@ def receiveData():
     traffic = url_find(url)
     if traffic:
       mongo_db.traffic.update(
-        { 'url' : url },
+        { '_id' : url },
         { '$inc' : { 'count' : 1 } }
       )
     else:
