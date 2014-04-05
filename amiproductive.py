@@ -67,7 +67,7 @@ def receiveData():
 
   if post.get('data'):
     info = user_find('10:10:10:10')
-    url = urlparse(re.search("(?P<url>https?://[^\s]+)", url).group("url"))[1]
+    url = urlparse(re.search("(?P<url>https?://[^\s]+)", post.get('data')).group("url"))[1]
     
     if info:
       if url in good:
