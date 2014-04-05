@@ -49,6 +49,10 @@ mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
 def index():
   return bottle.template('index')
 
+@bottle.route('/welcome')
+def index():
+  return bottle.template('welcome')
+
 # def snippet_create(user, code):
 #   nsnippet = {
 #     '_id': uuid.uuid4().hex,
