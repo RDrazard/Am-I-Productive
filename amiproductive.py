@@ -50,6 +50,10 @@ mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
 def index():
   return bottle.template('index', mac=None)
 
+@bottle.route('/data', method="POST")
+def data():
+  return bottle.request.forms.get('data')
+
 @bottle.route('/receiveData', method="POST")
 def receiveData():
   post = bottle.request.forms
