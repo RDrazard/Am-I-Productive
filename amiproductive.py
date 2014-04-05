@@ -68,7 +68,9 @@ def receiveData():
 
   if post.get('data'):
     info = user_find('10:10:10:10')
-    url = urlparse(re.search("(?P<url>https?://[^\s]+)", post.get('data')).group("url"))[1]
+    url = re.search("(?P<url>https?://[^\s]+)", post.get('data')).group("url")
+    if url is not None:   
+      url = urlparse(url)[1]
     
     if not info:   
       user = {
