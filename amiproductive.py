@@ -5,8 +5,6 @@ import os
 import uuid
 import bottle
 import pymongo
-import netifaces as nif
-import socket
 
 bottle.debug(True)
 
@@ -49,20 +47,15 @@ mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
 
 @bottle.route('/')
 def index():
-  return bottle.template('index', mac=mac_for_ip(socket.gethostbyname(socket.gethostname())))
+  return bottle.template('index', mac=getMacAddress())
 
-def mac_for_ip(ip):
-    'Returns a list of MACs for interfaces that have given IP, returns None if not found'
-    for i in nif.interfaces():
-        addrs = nif.ifaddresses(i)
-        try:
-            if_mac = addrs[nif.AF_LINK][0]['addr']
-            if_ip = addrs[nif.AF_INET][0]['addr']
-        except (IndexError, KeyError): #ignore ifaces that dont have MAC or IP
-            if_mac = if_ip = None
-        if if_ip == ip:
-            return if_mac
-    return None
+def getMacAddress():
+  hdr = "\xff"*6
+  mac = uuid.getnode()
+  txt = "%012X"%mac
+  as_b = [int("".join(x),16) for x in map(None,*(txt[::2],txt[1::2]))]
+  as_s = "".join(chr(b) for b in as_b)
+  return  hdr + as_s
 
 # def snippet_create(user, code):
 #   nsnippet = {
