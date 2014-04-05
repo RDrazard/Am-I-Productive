@@ -47,11 +47,7 @@ mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
 
 @bottle.route('/')
 def index():
-  return bottle.template('index.html')
-
-@bottle.route('/welcome')
-def index():
-  return bottle.template('welcome.html')
+  return bottle.template('index')
 
 # def snippet_create(user, code):
 #   nsnippet = {
@@ -121,7 +117,7 @@ def index():
 
 # reserved_usernames = 'home signup login logout post static DEBUG note annote'
 
-# bottle.TEMPLATE_PATH.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'views'))
+bottle.TEMPLATE_PATH.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'views'))
 
 # def get_session():
 #   session = bottle.request.get_cookie('session', secret='secret')
