@@ -47,7 +47,14 @@ mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
 
 @bottle.route('/')
 def index():
-  return bottle.template('index', mac=hex(get_mac()))
+  return bottle.template('index', mac=getHwAddr('eth0'))
+
+import fcntl, socket, struct
+
+def getHwAddr(ifname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    info = fcntl.ioctl(s.fileno(), 0x8927,  struct.pack('256s', ifname[:15]))
+    return ''.join(['%02x:' % ord(char) for char in info[18:24]])[:-1]
 
 # def snippet_create(user, code):
 #   nsnippet = {
