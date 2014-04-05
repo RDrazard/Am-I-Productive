@@ -63,8 +63,8 @@ def data():
 @bottle.route('/receiveData', method="POST")
 def receiveData():
   post = bottle.request.forms
-  good = ['google.com', 'stackoverflow.com']
-  bad = ['facebook.com', 'reddit.com']
+  # good = ['google.com', 'stackoverflow.com']
+  # bad = ['facebook.com', 'reddit.com']
 
   if post.get('data'):
     info = user_find('10:10:10:10')
@@ -76,24 +76,24 @@ def receiveData():
     if url is not None:   
       url = urlparse(url)[1]
     
-    if not info:   
-      user = {
-        '_id' : '10:10:10:10',
-        'good' : 0,
-        'bad' : 0
-      }
-      userid = mongo_db.users.insert(user)
+    # if not info:   
+    #   user = {
+    #     '_id' : '10:10:10:10',
+    #     'good' : 0,
+    #     'bad' : 0
+    #   }
+    #   userid = mongo_db.users.insert(user)
 
-    if url in good:
-      mongo_db.users.update(
-        { '_id' : '10:10:10:10' },
-        { '$inc' : { 'good' : 1, 'bad' : -1 } }
-      )
-    elif url in bad:
-      mongo_db.users.update(
-        { '_id' : '10:10:10:10' },
-        { '$inc' : { 'good' : -1, 'bad' : 1 } }
-      )
+    # if url in good:
+    #   mongo_db.users.update(
+    #     { '_id' : '10:10:10:10' },
+    #     { '$inc' : { 'good' : 1, 'bad' : -1 } }
+    #   )
+    # elif url in bad:
+    #   mongo_db.users.update(
+    #     { '_id' : '10:10:10:10' },
+    #     { '$inc' : { 'good' : -1, 'bad' : 1 } }
+    #   )
 
     traffic = url_find(url)
     if traffic:
@@ -107,7 +107,7 @@ def receiveData():
         'count' : 1,
         'url' : url
       }
-      userid = mongo_db.traffic.insert(connection)
+      new_url = mongo_db.traffic.insert(connection)
 
 # def snippet_create(user, code):
 #   nsnippet = {
