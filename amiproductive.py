@@ -16,12 +16,12 @@ mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
                       os.environ['OPENSHIFT_MONGODB_DB_PASSWORD'])
 
 
-client = pymongo.MongoClient()
+# client = pymongo.MongoClient()
  
-mongo_db = client.alpha
-mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
-                     os.environ['OPENSHIFT_MONGODB_DB_PASSWORD'],
-                     'alpha')
+# mongo_db = client.amiproductive
+# mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
+#                      os.environ['OPENSHIFT_MONGODB_DB_PASSWORD'],
+#                      'amiproductive')
 
 # def user_find(email):
 #   if not email: return None
