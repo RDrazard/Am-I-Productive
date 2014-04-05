@@ -81,10 +81,12 @@ def receiveData():
         )
     else:
       user = {
-        '_id': '10:10:10:10'
+        '_id': '10:10:10:10',
+        'good': 0,
+        'bad': 0
       }
       userid = mongo_db.users.insert(user)
-      
+
     traffic = url_find(url)
     if traffic:
       mongo_db.traffic.update(
@@ -94,6 +96,7 @@ def receiveData():
     else:
       connection = {
         '_id': '10:10:10:10',
+        'count': 1
         'url': url
       }
       userid = mongo_db.traffic.insert(connection)
