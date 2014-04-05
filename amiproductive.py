@@ -81,9 +81,9 @@ def receiveData():
         )
     else:
       user = {
-        '_id': '10:10:10:10',
-        'good': 0
-        'bad': 0
+        '_id' : '10:10:10:10',
+        'good' : 0,
+        'bad' : 0
       }
       userid = mongo_db.users.insert(user)
 
@@ -95,9 +95,9 @@ def receiveData():
       )
     else:
       connection = {
-        '_id': '10:10:10:10',
-        'count': 1,
-        'url': url
+        '_id' : '10:10:10:10',
+        'count' : 1,
+        'url' : url
       }
       userid = mongo_db.traffic.insert(connection)
 
