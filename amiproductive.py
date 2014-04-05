@@ -61,7 +61,7 @@ def receiveData():
   bad = ['https://facebook.com']
 
   if post.get('data'):
-    info = user_find(post.get('data'))
+    info = user_find('10:10:10:10')
     url = re.search("(?P<url>https?://[^\s]+)", info).group("url")
     
     if info:
@@ -75,11 +75,16 @@ def receiveData():
           { _id : "10:10:10:10" },
           { $inc : { good: -1, bad : 1 } }
         )
+      mongo_db.traffic.update(
+        { url : url },
+        { $inc : { count: 1 } }
+      )
 
     else:
       connection = {
         '_id': '10:10:10:10',
-        'url': url
+        'url': url,
+        'count': 1
       }
       userid = mongo_db.traffic.insert(connection)
 
