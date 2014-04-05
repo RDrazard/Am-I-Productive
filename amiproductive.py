@@ -51,7 +51,7 @@ def index():
 
 @bottle.route('/receiveData', method="POST")
 def receiveData():
-  return bottle.request.POST
+  return bottle.request.forms.get('data')
 
 # def snippet_create(user, code):
 #   nsnippet = {
