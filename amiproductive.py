@@ -31,7 +31,7 @@ def user_find(data):
 
 def url_find(data):
   if not data: return None
-  return mongo_db.traffic.find_one({ 'url': data})
+  return mongo_db.traffic.find_one({ '_id': data})
 
 # @bottle.route('/', method="POST")
 # def index():
