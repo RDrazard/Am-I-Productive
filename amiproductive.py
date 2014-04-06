@@ -59,9 +59,9 @@ def index():
         'total': { '$sum': "$count" } 
     }
   }])["result"][0]["total"]
-  good = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'good' : 1 } )[0]
-  bad = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'bad' : 1 } )[0]
-  return bottle.template('index', mac=None, total_requests=int(total_requests), good=good, bad=bad)
+  good = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'good' : 1, '_id' : 0 } )[0][0]
+  bad = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'bad' : 1, '_id' : 0 } )[0][0]
+  return bottle.template('index', mac=None, total_requests=int(total_requests), good=int(good), bad=int(bad))
 
 @bottle.route('/data', method="POST")
 def data():
