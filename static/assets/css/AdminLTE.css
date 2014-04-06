@@ -2809,6 +2809,5 @@ Component: timeline
 }
 
 div.no-print {
-  top: 65px;
-
+  top: 65px!important;
 }
