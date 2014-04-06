@@ -80,11 +80,11 @@ def index():
   except ZeroDivisionError:
     percentage = 0
 
-  if float(percentage) < 50.00 and int(total_requests) > 100:
-    email = 'alan.plotko@gmail.com'
-    sg = sendgrid.SendGridClient('Drazard', 'sendgrid')
-    message = sendgrid.Mail(to=email, subject='Your productivity has dropped!', text='Hey! We just saw your productivity drop! Get back to work!', from_email='alan.plotko@gmail.com')
-    status, msg = sg.send(message)
+  # if float(percentage) < 50.00 and int(total_requests) > 100:
+  #   email = 'alan.plotko@gmail.com'
+  #   sg = sendgrid.SendGridClient('Drazard', 'sendgrid')
+  #   message = sendgrid.Mail(to=email, subject='Your productivity has dropped!', text='Hey! We just saw your productivity drop! Get back to work!', from_email='alan.plotko@gmail.com')
+  #   status, msg = sg.send(message)
 
   return bottle.template('index', mac='10:10:10:10', total_requests=int(total_requests), good=int(good), bad=int(bad), percentage=percentage)
 
