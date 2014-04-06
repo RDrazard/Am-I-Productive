@@ -62,9 +62,22 @@ def index():
     }])["result"][0]["total"]
   except IndexError:
     total_requests = 0
-  good = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'good' : 1, '_id' : 0 } )[0]['good']
-  bad = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'bad' : 1, '_id' : 0 } )[0]['bad']
-  percentage = "{0:.2f}".format((good / (good + bad)) * 100)
+
+  try:
+    good = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'good' : 1, '_id' : 0 } )[0]['good']
+  except IndexError:
+    good = 0
+
+  try:
+    bad = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'bad' : 1, '_id' : 0 } )[0]['bad']
+  except IndexError:
+    bad = 0
+  
+  try:
+    percentage = "{0:.2f}".format((good / (good + bad)) * 100)
+  except ZeroDivisionError:
+    percentage = 0
+  
   return bottle.template('index', mac=None, total_requests=int(total_requests), good=int(good), bad=int(bad), percentage=percentage)
 
 @bottle.route('/data', method="POST")
