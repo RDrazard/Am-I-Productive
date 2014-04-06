@@ -125,7 +125,6 @@ def receiveData():
 
     try:
       url = re.search("(?P<url>https?://[^\s]+)", post.get('data')).group("url")
-      ip = post.get('data').split(" ")[2]
     except AttributeError:
       return
 
@@ -135,7 +134,7 @@ def receiveData():
         'good' : 0,
         'bad' : 0
       }
-      userId = mongo_db.traffic.insert(user)      
+      userId = mongo_db.users.insert(user)      
 
     if url is not None:   
       url = urlparse(url)[1]
