@@ -325,7 +325,8 @@
                     </div><!-- /.row -->
 
                     <!-- top row -->
-                    <div class="row">
+                    <div id="big-data" class="row">
+
                         <div class="col-xs-12 connectedSortable">
                             
                         </div><!-- /.col -->
@@ -354,7 +355,7 @@
             .size([diameter, diameter])
             .padding(1.5);
 
-        var svg = d3.select("body").append("svg")
+        var svg = d3.select("big-data").append("svg")
             .attr("width", diameter)
             .attr("height", diameter)
             .attr("class", "bubble");
