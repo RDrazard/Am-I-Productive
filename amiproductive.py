@@ -80,9 +80,11 @@ def receiveData():
       url = re.search("(?P<url>https?://[^\s]+)", post.get('data')).group("url")
     except AttributeError:
       return
-    
+
     if url is not None:   
       url = urlparse(url)[1]
+    if 'www.' in url:
+      url = url.replace("www.", "")
     
     if not info:   
       user = {
