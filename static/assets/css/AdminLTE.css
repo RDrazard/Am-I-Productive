@@ -2802,3 +2802,8 @@ Component: timeline
 .pace-inactive {
   display: none;
 }
+
+/* Custom Styles */
+.content-header {
+  margin-right: 75px;
+}
