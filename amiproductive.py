@@ -105,6 +105,11 @@ def receiveData():
 
   if post.get('data'):
     info = user_find('10:10:10:10')
+
+    images = (".png", ".jpg", ".gif")
+    if any(s in post.get('data') for s in images):
+      return
+
     try:
       url = re.search("(?P<url>https?://[^\s]+)", post.get('data')).group("url")
     except AttributeError:
