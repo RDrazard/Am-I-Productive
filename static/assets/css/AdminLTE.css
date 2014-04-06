@@ -2807,3 +2807,8 @@ Component: timeline
 .content-header {
   margin-right: 75px;
 }
+
+div.no-print {
+  top: 65px;
+
+}
