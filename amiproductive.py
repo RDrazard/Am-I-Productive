@@ -87,7 +87,7 @@ def index():
       d['children'] = []
       d['children'].append({ 
         'name': record['_id'],
-        'size': record['count'] * 500
+        'size': record['count'] * 100
       })
     f.write(json.dumps(d))
 
