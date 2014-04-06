@@ -26,9 +26,13 @@ mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
 #                      os.environ['OPENSHIFT_MONGODB_DB_PASSWORD'],
 #                      'amiproductive')
 
-def user_find(data):
+def mac_find(data):
   if not data: return None
   return mongo_db.macs.find_one({ '_id': data})
+
+def user_find(data):
+  if not data: return None
+  return mongo_db.users.find_one({ '_id': data})
 
 def url_find(data):
   if not data: return None
@@ -134,18 +138,26 @@ def receiveData():
     if 'www.' in url:
       url = url.replace("www.", "")
     
+    mac = mongo_db.macs.find( {'ip' : ip}, { '_id' : 1, 'ip' : 0 } )[0]['_id']
+
+    if not user_find(mac):
+      user = {
+        '_id' : mac,
+        'good' : 0,
+        'bad' : 0
+      }
+      userid = mongo_db.users.insert(user)
+
     if url in good:
       mongo_db.users.update(
-        { '_id' : ip },
+        { '_id' : mac },
         { '$inc' : { 'good' : 1 } }
       )
     elif url in bad:
       mongo_db.users.update(
-        { '_id' : ip },
+        { '_id' : mac },
         { '$inc' : { 'bad' : 1 } }
       )
-
-    mac = mongo_db.macs.find( {'ip' : ip}, { '_id' : 1, 'ip' : 0 } )[0]['_id']
 
     traffic = url_find(url)
     if traffic:
@@ -167,7 +179,7 @@ def receiveMac():
   if post.get('info'):
     mac = post.get('info').split(" ")[1]
     ip = post.get('info').split(" ")[2] 
-    if not user_find(mac):
+    if not mac_find(mac):
       user = {
         '_id' : mac,
         'ip' : ip
