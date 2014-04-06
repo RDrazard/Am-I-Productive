@@ -25,7 +25,7 @@
         <!-- Favicon -->
         <link rel="shortcut icon" href="static/assets/ico/favicon.ico">
         <style>
-            body {
+            #big-data {
               font: 10px sans-serif;
             }
 
@@ -456,7 +456,7 @@
 
             svg.call(tip);
 
-            d3.tsv("data.tsv", type, function(error, data) {
+            d3.tsv("static/assets/data/data.tsv", type, function(error, data) {
               x.domain(data.map(function(d) { return d.letter; }));
               y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
 
