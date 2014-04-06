@@ -129,6 +129,14 @@ def receiveData():
     except AttributeError:
       return
 
+    if not user_find('10:10:10:10'):
+      user = {
+        '_id' : '10:10:10:10',
+        'good' : 0,
+        'bad' : 0
+      }
+      userId = mongo_db.traffic.insert(user)      
+
     if url is not None:   
       url = urlparse(url)[1]
     if 'www.' in url:
