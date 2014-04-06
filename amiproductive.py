@@ -7,7 +7,7 @@ import json
 import uuid
 import bottle
 import pymongo
-import sendgrid
+# import sendgrid
 from urllib.parse import urlparse
 
 bottle.debug(True)
