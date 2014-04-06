@@ -60,7 +60,7 @@ def url_find(data):
 def index():
   try:
     total_requests = mongo_db.traffic.aggregate([{ 
-      '$group': { 
+      '$group': {
           '_id': None, 
           'total': { '$sum': "$count" } 
       }
@@ -138,11 +138,11 @@ def receiveData():
     if 'www.' in url:
       url = url.replace("www.", "")
     
-    mac = mongo_db.macs.find( {'ip' : ip}, { '_id' : 1, 'ip' : 0 } )[0]['_id']
-
+    mac = mongo_db.macs.find( {'ip' : ip}, { '_id' : 1, 'ip' : 0 } )
+    
     with open(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'static/assets/data/stuff.txt'), 'w') as f:
       f.write(mongo_db.macs.find( {'ip' : ip}, { '_id' : 1, 'ip' : 0 } ))
-    
+
     if not user_find(mac):
       user = {
         '_id' : mac,
@@ -181,7 +181,7 @@ def receiveMac():
   post = bottle.request.forms
   if post.get('info'):
     mac = post.get('info').split(" ")[1]
-    ip = post.get('info').split(" ")[2] 
+    ip = post.get('info').split(" ")[2]
     if not mac_find(mac):
       user = {
         '_id' : mac,
