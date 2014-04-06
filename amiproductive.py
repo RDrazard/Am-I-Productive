@@ -80,7 +80,7 @@ def index():
   except ZeroDivisionError:
     percentage = 0
 
-  if percentage < 50:
+  if percentage < 50 and total_requests > 100:
     email = 'alan.plotko@gmail.com'
     sg = sendgrid.SendGridClient('Drazard', 'sendgrid')
     message = sendgrid.Mail(to=email, subject='Your productivity has dropped!', text='Hey! We just saw your productivity drop! Get back to work!', from_email='alan.plotko@gmail.com')
