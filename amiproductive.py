@@ -79,7 +79,7 @@ def index():
   except ZeroDivisionError:
     percentage = 0
 
-  with open('static/assets/data/flare.json', 'w') as f:
+  with open(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'static/assets/data/flare.json'), 'w') as f:
     d['name'] = 'flare'
     d['children'] = []
     cursor = mongo_db.traffic.find({'mac' : '10:10:10:10'})
