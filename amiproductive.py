@@ -54,18 +54,44 @@ def url_find(data):
 
 @bottle.route('/')
 def index():
-  total_requests = mongo_db.traffic.aggregate([{ 
-    '$group': { 
-        '_id': None, 
-        'total': { '$sum': "$count" } 
-    }
-  }])["result"][0]["total"]
-  good = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'good' : 1, '_id' : 0 } )[0]['good']
-  bad = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'bad' : 1, '_id' : 0 } )[0]['bad']
+  try:
+    total_requests = mongo_db.traffic.aggregate([{ 
+      '$group': { 
+          '_id': None, 
+          'total': { '$sum': "$count" } 
+      }
+    }])["result"][0]["total"]
+  except IndexError:
+    total_requests = 0
+
+  try:
+    good = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'good' : 1, '_id' : 0 } )[0]['good']
+  except IndexError:
+    good = 0
+
+  try:
+    bad = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'bad' : 1, '_id' : 0 } )[0]['bad']
+  except IndexError:
+    bad = 0
   
-  percentage = "{0:.2f}".format((good / (good + bad)) * 100)
-  
-  return bottle.template('index', mac=None, total_requests=total_requests, good=good, bad=bad, percentage=percentage)
+  try:
+    percentage = "{0:.2f}".format((good / (good + bad)) * 100)
+  except ZeroDivisionError:
+    percentage = 0
+
+  with open(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'static/assets/data/flare.json'), 'w') as f:
+    d = {}
+    d['name'] = 'visited_sites'
+    d['children'] = []
+    cursor = mongo_db.traffic.find({'mac' : '10:10:10:10'})
+    for record in cursor: 
+      d['children'].append({ 
+        'name': record['_id'],
+        'size': record['count']
+      })
+    f.write(json.dumps(d))
+
+  return bottle.template('index', mac=None, total_requests=int(total_requests), good=int(good), bad=int(bad), percentage=percentage)
 
 @bottle.route('/visualize')
 def visualize():
