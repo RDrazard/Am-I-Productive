@@ -79,12 +79,6 @@ def index():
   except ZeroDivisionError:
     percentage = 0
 
-  with open(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'static/assets/data/data.tsv'), 'w') as f:
-    f.write('letter\tfrequency\n')
-    cursor = mongo_db.traffic.find({'mac' : '10:10:10:10'})
-    for record in cursor:
-      f.write(record['_id'] + ' ' + str(record['count'] / total_requests) + '\n')
-
   return bottle.template('index', mac='10:10:10:10', total_requests=int(total_requests), good=int(good), bad=int(bad), percentage=percentage)
 
 @bottle.route('/visualize')
