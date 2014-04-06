@@ -84,19 +84,20 @@ def receiveData():
     if not info:   
       user = {
         '_id' : '10:10:10:10',
-        'reputation' : 0
+        'good' : 0,
+        'bad' : 0
       }
       userid = mongo_db.users.insert(user)
 
     if url in good:
       mongo_db.users.update(
         { '_id' : '10:10:10:10' },
-        { '$inc' : { 'reputation' : 1 } }
+        { '$inc' : { 'good' : 1 } }
       )
     elif url in bad:
       mongo_db.users.update(
         { '_id' : '10:10:10:10' },
-        { '$inc' : { 'reputation' : -1 } }
+        { '$inc' : { 'bad' : 1 } }
       )
 
     traffic = url_find(url)
