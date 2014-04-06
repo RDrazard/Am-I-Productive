@@ -82,8 +82,8 @@ def index():
   with open('static/assets/data/flare.json', 'w') as f:
     d['name'] = 'flare'
     d['children'] = []
-    cursor = mongo_db.traffic.find({x : {"$gt" : 1}})
-    for record in cursor1: 
+    cursor = mongo_db.traffic.find({'mac' : '10:10:10:10'})
+    for record in cursor: 
       d['children'].append({ 
         'name': record['_id'],
         'size': record['count'] * 500
