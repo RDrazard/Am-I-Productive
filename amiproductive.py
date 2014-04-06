@@ -138,7 +138,7 @@ def receiveData():
     if 'www.' in url:
       url = url.replace("www.", "")
     
-    mac = mongo_db.macs.find( {'ip' : ip} )['_id']
+    mac = mongo_db.macs.find( {'ip' : ip}, { '_id' : 1, 'ip' : 0 } )[0]['_id']
 
     if not user_find(mac):
       user = {
