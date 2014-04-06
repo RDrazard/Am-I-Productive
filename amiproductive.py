@@ -57,7 +57,7 @@ def index():
   try:
     total_requests = mongo_db.traffic.aggregate([{ 
       '$group': { 
-          'mac': None, 
+          '_id': None, 
           'total': { '$sum': "$count" } 
       }
     }])["result"][0]["total"]
