@@ -81,10 +81,10 @@ def index():
 
   with open(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'static/assets/data/flare.json'), 'w') as f:
     d = {}
-    d['name'] = 'flare'
-    d['children'] = []
     cursor = mongo_db.traffic.find({'mac' : '10:10:10:10'})
-    for record in cursor: 
+    for record in cursor:
+      d['name'] = record['_id']
+      d['children'] = []
       d['children'].append({ 
         'name': record['_id'],
         'size': record['count'] * 500
