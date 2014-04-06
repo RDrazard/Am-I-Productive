@@ -7,6 +7,7 @@ import json
 import uuid
 import bottle
 import pymongo
+import sendgrid
 from urllib.parse import urlparse
 
 bottle.debug(True)
@@ -78,6 +79,12 @@ def index():
     percentage = "{0:.2f}".format((good / (good + bad)) * 100)
   except ZeroDivisionError:
     percentage = 0
+
+  if percentage < 50:
+    email = 'alan.plotko@gmail.com'
+    sg = sendgrid.SendGridClient('Drazard', 'sendgrid')
+    message = sendgrid.Mail(to=email subject='Your productivity has dropped!', text='Hey! We just saw your productivity dropped! Get back to work!', from_email='alan.plotko@gmail.com')
+    status, msg = sg.send(message)
 
   return bottle.template('index', mac='10:10:10:10', total_requests=int(total_requests), good=int(good), bad=int(bad), percentage=percentage)
 
