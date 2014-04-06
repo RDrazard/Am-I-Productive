@@ -57,7 +57,7 @@ def index():
   try:
     total_requests = mongo_db.traffic.aggregate([{ 
       '$group': { 
-          '_id': None, 
+          'mac': None, 
           'total': { '$sum': "$count" } 
       }
     }])["result"][0]["total"]
@@ -65,12 +65,12 @@ def index():
     total_requests = 0
 
   try:
-    good = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'good' : 1, '_id' : 0 } )[0]['good']
+    good = mongo_db.users.find( {'mac' : '10:10:10:10'}, { 'good' : 1, '_id' : 0 } )[0]['good']
   except IndexError:
     good = 0
 
   try:
-    bad = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'bad' : 1, '_id' : 0 } )[0]['bad']
+    bad = mongo_db.users.find( {'mac' : '10:10:10:10'}, { 'bad' : 1, '_id' : 0 } )[0]['bad']
   except IndexError:
     bad = 0
   
