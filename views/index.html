@@ -252,12 +252,16 @@
                             <!-- small box -->
                             <div class="small-box bg-green">
                                 <div class="inner">
-                                    <h3>
-                                        53<sup style="font-size: 20px">%</sup>
-                                    </h3>
                                     <p>
-                                        Total Requests
+                                    Your productivity score is
                                     </p>
+                                    <h3>
+                                    % setdefault('percentage', 0)
+                                    % if defined('percentage'):
+                                        {{ percentage }}
+                                    % end
+                                    <sup style="font-size: 20px">%</sup>
+                                    </h3>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
