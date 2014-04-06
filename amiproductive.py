@@ -141,8 +141,8 @@ def receiveData():
     mac = mongo_db.macs.find( {'ip' : ip}, { '_id' : 1, 'ip' : 0 } )
 
     with open(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'static/assets/data/stuff.txt'), 'w') as f:
-      f.write(mac)
-      
+      f.write(str(mac))
+
     if not user_find(mac):
       user = {
         '_id' : mac,
