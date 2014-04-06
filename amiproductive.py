@@ -58,8 +58,8 @@ def index():
         '_id': None, 
         'total': { '$sum': "$count" } 
     }
-  }])["result"]["total"]
-  return bottle.template('index', mac=None, total_requests=total_requests)
+  }])["result"][0]["total"]
+  return bottle.template('index', mac=None, total_requests=int(total_requests))
 
 @bottle.route('/data', method="POST")
 def data():
