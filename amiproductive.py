@@ -26,13 +26,9 @@ mongo_db.authenticate(os.environ['OPENSHIFT_MONGODB_DB_USERNAME'],
 #                      os.environ['OPENSHIFT_MONGODB_DB_PASSWORD'],
 #                      'amiproductive')
 
-def mac_find(data):
-  if not data: return None
-  return mongo_db.macs.find_one({ '_id': data})
-
 def user_find(data):
   if not data: return None
-  return mongo_db.users.find_one({ '_id': data})
+  return mongo_db.macs.find_one({ '_id': data})
 
 def url_find(data):
   if not data: return None
@@ -60,7 +56,7 @@ def url_find(data):
 def index():
   try:
     total_requests = mongo_db.traffic.aggregate([{ 
-      '$group': {
+      '$group': { 
           '_id': None, 
           'total': { '$sum': "$count" } 
       }
@@ -123,8 +119,8 @@ def receiveData():
   bad = ['facebook.com', 'reddit.com']
 
   if post.get('data'):
-    images = (".png", ".jpg", ".gif")
-    if any(s in post.get('data') for s in images):
+    files = (".png", ".jpg", ".gif", ".js")
+    if any(s in post.get('data') for s in files):
       return
 
     try:
@@ -138,58 +134,48 @@ def receiveData():
     if 'www.' in url:
       url = url.replace("www.", "")
     
-    mac = mongo_db.macs.find( {'ip' : ip}, { '_id' : 1, 'ip' : 0 } )[0]['_id']
-
-    if not user_find(mac):
-      user = {
-        '_id' : mac,
-        'good' : 0,
-        'bad' : 0
-      }
-      userid = mongo_db.users.insert(user)
-
     if url in good:
       mongo_db.users.update(
-        { '_id' : mac },
+        { '_id' : '10:10:10:10' },
         { '$inc' : { 'good' : 1 } }
       )
     elif url in bad:
       mongo_db.users.update(
-        { '_id' : mac },
+        { '_id' : '10:10:10:10' },
         { '$inc' : { 'bad' : 1 } }
       )
 
     traffic = url_find(url)
     if traffic:
       mongo_db.traffic.update(
-        { '_id' : url, 'mac' : mac },
+        { '_id' : url },
         { '$inc' : { 'count' : 1 } }
       )
     else:
       connection = {
         '_id' : url,
         'count' : 1,
-        'mac' : mac
+        'mac' : '10:10:10:10'
       }
       new_url = mongo_db.traffic.insert(connection)
 
-@bottle.route('/receiveMac', method="POST")
-def receiveMac():
-  post = bottle.request.forms
-  if post.get('info'):
-    mac = post.get('info').split(" ")[1]
-    ip = post.get('info').split(" ")[2]
-    if not mac_find(mac):
-      user = {
-        '_id' : mac,
-        'ip' : ip
-      }
-      userid = mongo_db.macs.insert(user)
-    else:
-      mongo_db.macs.update(
-        { '_id' : mac },
-        { '$set' : { 'ip' : ip } }
-      )
+# @bottle.route('/receiveMac', method="POST")
+# def receiveMac():
+#   post = bottle.request.forms
+#   if post.get('info'):
+#     mac = post.get('info').split(" ")[1]
+#     ip = post.get('info').split(" ")[2] 
+#     if not user_find(mac):
+#       user = {
+#         '_id' : mac,
+#         'ip' : ip
+#       }
+#       userid = mongo_db.macs.insert(user)
+#     else:
+#       mongo_db.macs.update(
+#         { '_id' : mac },
+#         { '$set' : { 'ip' : ip } }
+#       )
 
 
 # def snippet_create(user, code):
