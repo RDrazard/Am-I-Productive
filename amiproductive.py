@@ -91,7 +91,11 @@ def index():
       })
     f.write(json.dumps(d))
 
-  return bottle.template('index', mac=None, total_requests=int(total_requests), good=int(good), bad=int(bad), percentage=percentage)
+  return bottle.template('index', mac=None)
+
+@bottle.route('/visualize')
+def visualize():
+  returnbottle.template('visualize', mac=None, total_requests=int(total_requests), good=int(good), bad=int(bad), percentage=percentage)
 
 @bottle.route('/data', method="POST")
 def data():
