@@ -65,7 +65,7 @@ def index():
   
   percentage = "{0:.2f}".format((good / (good + bad)) * 100)
   
-  return bottle.template('index', mac=None)
+  return bottle.template('index', mac=None, total_requests=total_requests, good=good, bad=bad, percentage=percentage)
 
 @bottle.route('/visualize')
 def visualize():
