@@ -54,31 +54,17 @@ def url_find(data):
 
 @bottle.route('/')
 def index():
-  try:
-    total_requests = mongo_db.traffic.aggregate([{ 
-      '$group': { 
-          '_id': None, 
-          'total': { '$sum': "$count" } 
-      }
-    }])["result"][0]["total"]
-  except IndexError:
-    total_requests = 0
-
-  try:
-    good = mongo_db.users.find( {'mac' : '10:10:10:10'}, { 'good' : 1, '_id' : 0 } )[0]['good']
-  except IndexError:
-    good = 0
-
-  try:
-    bad = mongo_db.users.find( {'mac' : '10:10:10:10'}, { 'bad' : 1, '_id' : 0 } )[0]['bad']
-  except IndexError:
-    bad = 0
+  total_requests = mongo_db.traffic.aggregate([{ 
+    '$group': { 
+        '_id': None, 
+        'total': { '$sum': "$count" } 
+    }
+  }])["result"][0]["total"]
+  good = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'good' : 1, '_id' : 0 } )[0]['good']
+  bad = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'bad' : 1, '_id' : 0 } )[0]['bad']
   
-  try:
-    percentage = "{0:.2f}".format((good / (good + bad)) * 100)
-  except ZeroDivisionError:
-    percentage = 0
-
+  percentage = "{0:.2f}".format((good / (good + bad)) * 100)
+  
   return bottle.template('index', mac=None)
 
 @bottle.route('/visualize')
