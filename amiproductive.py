@@ -79,6 +79,10 @@ def index():
   except ZeroDivisionError:
     percentage = 0
 
+  return bottle.template('index', mac=None)
+
+@bottle.route('/visualize')
+def visualize():
   with open(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'static/assets/data/flare.json'), 'w') as f:
     d = {}
     d['name'] = 'visited_sites'
@@ -90,12 +94,7 @@ def index():
         'size': record['count']
       })
     f.write(json.dumps(d))
-
-  return bottle.template('index', mac=None)
-
-@bottle.route('/visualize')
-def visualize():
-  returnbottle.template('visualize', mac=None, total_requests=int(total_requests), good=int(good), bad=int(bad), percentage=percentage)
+  return bottle.template('visualize', mac=None)
 
 @bottle.route('/data', method="POST")
 def data():
