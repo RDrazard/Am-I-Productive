@@ -53,12 +53,15 @@ def url_find(data):
 
 @bottle.route('/')
 def index():
-  total_requests = mongo_db.traffic.aggregate([{ 
-    '$group': { 
-        '_id': None, 
-        'total': { '$sum': "$count" } 
-    }
-  }])["result"][0]["total"]
+  try:
+    total_requests = mongo_db.traffic.aggregate([{ 
+      '$group': { 
+          '_id': None, 
+          'total': { '$sum': "$count" } 
+      }
+    }])["result"][0]["total"]
+  except IndexError:
+    total_requests = 0
   good = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'good' : 1, '_id' : 0 } )[0]['good']
   bad = mongo_db.users.find( {'_id' : '10:10:10:10'}, { 'bad' : 1, '_id' : 0 } )[0]['bad']
   percentage = "{0:.2f}".format((good / (good + bad)) * 100)
