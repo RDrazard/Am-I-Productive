@@ -3,6 +3,7 @@
 
 import os
 import re
+import json
 import uuid
 import bottle
 import pymongo
@@ -77,7 +78,18 @@ def index():
     percentage = "{0:.2f}".format((good / (good + bad)) * 100)
   except ZeroDivisionError:
     percentage = 0
-  
+
+  with open('static/assets/data/flare.json', 'w') as f:
+    d['name'] = 'flare'
+    d['children'] = []
+    cursor = mongo_db.traffic.find({x : {"$gt" : 1}})
+    for record in cursor1: 
+      d['children'].append({ 
+        'name': record['_id'],
+        'size': record['count'] * 500
+      })
+    f.write(json.dumps(d))
+
   return bottle.template('index', mac=None, total_requests=int(total_requests), good=int(good), bad=int(bad), percentage=percentage)
 
 @bottle.route('/data', method="POST")
