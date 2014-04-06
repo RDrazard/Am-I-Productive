@@ -138,7 +138,7 @@ def receiveData():
     if 'www.' in url:
       url = url.replace("www.", "")
     
-    mac = mongo_db.macs.find( {'ip' : ip}, { '_id' : 1, 'ip' : 0 } )[0]['_id']
+    mac = mongo_db.macs.find( {'ip' : ip} )[0]['_id']
 
     with open(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'static/assets/data/stuff.txt'), 'w') as f:
       f.write(str(mac))
