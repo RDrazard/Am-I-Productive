@@ -272,10 +272,13 @@
                             <div class="small-box bg-yellow">
                                 <div class="inner">
                                     <h3>
-                                        44
+                                    % setdefault('good', 0)
+                                    % if defined('good'):
+                                        {{ good }}
+                                    % end
                                     </h3>
                                     <p>
-                                        Productive
+                                        Requests Marked as Productive
                                     </p>
                                 </div>
                                 <div class="icon">
@@ -291,10 +294,13 @@
                             <div class="small-box bg-red">
                                 <div class="inner">
                                     <h3>
-                                        65
+                                    % setdefault('bad', 0)
+                                    % if defined('bad'):
+                                        {{ bad }}
+                                    % end
                                     </h3>
                                     <p>
-                                        Procrastination
+                                        Requests Marked as Procrastination
                                     </p>
                                 </div>
                                 <div class="icon">

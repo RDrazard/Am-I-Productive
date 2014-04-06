@@ -59,7 +59,9 @@ def index():
         'total': { '$sum': "$count" } 
     }
   }])["result"][0]["total"]
-  return bottle.template('index', mac=None, total_requests=int(total_requests))
+  good = mongo_db.users.find('_id' : '10:10:10:10')
+  bad = mongo_db.users.find('_id' : '10:10:10:10')
+  return bottle.template('index', mac=None, total_requests=int(total_requests), good=good, bad=bad)
 
 @bottle.route('/data', method="POST")
 def data():
