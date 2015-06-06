@@ -10,5 +10,5 @@
 
 ## Project Authors
 
-- Darrin Frodey (@dmfrodey)
-- Alan Plotko (@alanplotko)
+- Darrin Frodey ([@dmfrodey](https://github.com/dmfrodey))
+- Alan Plotko ([@alanplotko](https://github.com/alanplotko))
